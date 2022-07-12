@@ -1,0 +1,12 @@
+#Directories
+.vs/
+Library/
+Logs/
+obj/
+Temp/
+UserSettings/
+
+#Files
+*.vsconfig
+*.sln
+*.csproj
