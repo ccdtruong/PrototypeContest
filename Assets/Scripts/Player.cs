@@ -14,6 +14,8 @@ public class Player : MonoBehaviour
     private Transform m_groundCheckCollider;
     [SerializeField]
     LayerMask m_groundlayerMask;
+    [SerializeField]
+    LayerMask m_buttonlayerMask;
 
     private float horizontal;
 
@@ -26,6 +28,10 @@ public class Player : MonoBehaviour
     private Animator m_animator;
     private Rigidbody2D m_rigidbody2D;
 
+    private float objectWidth;
+    private float objectHeight;
+    private float delta = 0.2f;
+
 
     private bool m_facingRight = true;
     // Start is called before the first frame update
@@ -35,6 +41,9 @@ public class Player : MonoBehaviour
         m_rigidbody2D = gameObject.GetComponent<Rigidbody2D>();
         m_isJumping = false;
         m_isGrounded = true;
+
+        objectWidth = transform.GetComponent<SpriteRenderer>().bounds.size.x / 2;
+        objectHeight = transform.GetComponent<SpriteRenderer>().bounds.size.y / 2;
     }
 
     private void Update()
@@ -42,9 +51,16 @@ public class Player : MonoBehaviour
         if (!m_IsSelected) return;
         horizontal = Input.GetAxis("Horizontal");
 
-        if(Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Jump"))
         {
             Jump();
+        }
+
+        if(HoldTheButtonCheck())
+        {
+            Debug.Log("Holding button");
+            PlatformScript pls = GameObject.Find("Platform").GetComponent<PlatformScript>();
+            pls.Trigger();
         }
     }
 
@@ -102,6 +118,16 @@ public class Player : MonoBehaviour
         }
     }
 
+    public bool HoldTheButtonCheck()
+    {
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(m_groundCheckCollider.position, 0.1f, m_buttonlayerMask);
+        if(colliders.Length > 0)
+        {
+            return true;
+        }
+        return false;
+    }
+
     public void Move(float dir)
     {
         if (dir == 0)
@@ -135,6 +161,25 @@ public class Player : MonoBehaviour
             GameController controller = GameObject.Find("GameController").GetComponent<GameController>();
             controller.WinGame();
         }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag == "Player")
+        {
+
+        }
+    }
+
+    //prevent players from running out of the screen
+    private void LateUpdate()
+    {
+        GameController controller = GameObject.Find("GameController").GetComponent<GameController>();
+        Vector3 bounds = controller.GetBounds();
+        Vector3 viewPos = transform.position;
+        viewPos.x = Mathf.Clamp(viewPos.x, bounds.x * -1 +  objectWidth - delta, bounds.x - objectWidth + delta);
+        viewPos.y = Mathf.Clamp(viewPos.y, bounds.y * -1 + objectHeight - delta, bounds.y - objectHeight + delta);
+        transform.position = viewPos;
     }
 
 }

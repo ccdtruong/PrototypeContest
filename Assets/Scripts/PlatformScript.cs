@@ -59,5 +59,6 @@ public class PlatformScript : MonoBehaviour
             pos.y -= m_speed * Time.deltaTime;
             transform.position = pos;
         }
+        m_isActive = false;
     }
 }

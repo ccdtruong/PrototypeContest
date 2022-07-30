@@ -17,11 +17,11 @@ public class ButtonScript : MonoBehaviour
         
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if(collision.gameObject.tag == "Player")
-        {
-            m_platform.Trigger();
-        }
-    }
+    //private void OnCollisionEnter2D(Collision2D collision)
+    //{
+    //    if(collision.gameObject.tag == "Player")
+    //    {
+    //        m_platform.Trigger();
+    //    }
+    //}
 }
