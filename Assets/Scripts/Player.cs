@@ -8,6 +8,9 @@ public class Player : MonoBehaviour
     private float m_speed;
 
     [SerializeField]
+    private float m_jumpSpeed;
+
+    [SerializeField]
     private float m_jumpForce;
 
     [SerializeField]
@@ -53,7 +56,7 @@ public class Player : MonoBehaviour
     {
         if (!m_IsSelected) return;
         GroundCheck();
-        //Debug.Log("isGround" + m_isGrounded);
+        Debug.Log("isGround" + m_isGrounded);
         if (m_isGrounded)
         {
             m_animator.SetBool("isJumping", false);
@@ -95,7 +98,7 @@ public class Player : MonoBehaviour
     {
         m_isGrounded = false;
         Collider2D[] colliders = Physics2D.OverlapCircleAll(m_groundCheckCollider.position, 0.1f, m_groundlayerMask);
-        //Debug.Log("colliders.Length = " + colliders.Length);
+        Debug.Log("colliders.Length = " + colliders.Length);
         if (colliders.Length > 0)
         {
             m_isGrounded = true;
@@ -115,7 +118,13 @@ public class Player : MonoBehaviour
             Flip();
         }
         m_animator.SetBool("isWalking", true);
-        float xVal = dir * m_speed * Time.fixedDeltaTime;
+        float speed = m_speed;
+        if (!m_isGrounded)
+        {
+            speed = m_jumpSpeed;
+        }
+        Debug.Log("speed = " + speed);
+        float xVal = dir * speed * Time.fixedDeltaTime;
         Vector2 targetVelocity = new Vector2(xVal, m_rigidbody2D.velocity.y);
         m_rigidbody2D.velocity = targetVelocity;
     }
