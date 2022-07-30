@@ -141,7 +141,7 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.004945338, y: -0.28684407}
+  m_Offset: {x: 0, y: -0.3}
   serializedVersion: 2
   m_Radius: 0.30217665
 --- !u!114 &180653511
@@ -251,7 +251,7 @@ GameObject:
   m_Component:
   - component: {fileID: 329620264}
   - component: {fileID: 329620263}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Grid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2730,11 +2730,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2561409306614065173, guid: 09a3a53ec13d76041a2a4dd9b6122577, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.42
+      value: 3.505
       objectReference: {fileID: 0}
     - target: {fileID: 2561409306614065173, guid: 09a3a53ec13d76041a2a4dd9b6122577, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.493
+      value: 0.498
       objectReference: {fileID: 0}
     - target: {fileID: 2561409306614065173, guid: 09a3a53ec13d76041a2a4dd9b6122577, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2899,6 +2899,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7104622920975070758, guid: f54be547152999b44bcc9abe79a213a3, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 7104622921955932761, guid: f54be547152999b44bcc9abe79a213a3, type: 3}
       propertyPath: m_speed
       value: 400
@@ -2960,6 +2964,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7104622921955932770, guid: f54be547152999b44bcc9abe79a213a3, type: 3}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7104622921955932770, guid: f54be547152999b44bcc9abe79a213a3, type: 3}
       propertyPath: m_Material
       value: 
       objectReference: {fileID: 0}
@@ -2976,6 +2984,10 @@ PrefabInstance:
       value: Grumpy
       objectReference: {fileID: 0}
     - target: {fileID: 7104622921955932771, guid: f54be547152999b44bcc9abe79a213a3, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7104622921955932771, guid: f54be547152999b44bcc9abe79a213a3, type: 3}
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
@@ -2988,13 +3000,29 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7570997025524400379, guid: 050452e975b8c7e4ba499629473d05a4, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7570997025768798297, guid: 050452e975b8c7e4ba499629473d05a4, type: 3}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7570997025768798297, guid: 050452e975b8c7e4ba499629473d05a4, type: 3}
       propertyPath: m_Material
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 7570997025768798297, guid: 050452e975b8c7e4ba499629473d05a4, type: 3}
+      propertyPath: m_UseAutoMass
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7570997025768798299, guid: 050452e975b8c7e4ba499629473d05a4, type: 3}
       propertyPath: m_Name
       value: Rebellious
+      objectReference: {fileID: 0}
+    - target: {fileID: 7570997025768798299, guid: 050452e975b8c7e4ba499629473d05a4, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7570997025768798299, guid: 050452e975b8c7e4ba499629473d05a4, type: 3}
       propertyPath: m_TagString

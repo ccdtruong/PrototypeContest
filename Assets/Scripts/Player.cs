@@ -35,7 +35,7 @@ public class Player : MonoBehaviour
 
     private bool m_facingRight = true;
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         m_animator = gameObject.GetComponent<Animator>();
         m_rigidbody2D = gameObject.GetComponent<Rigidbody2D>();
@@ -46,7 +46,7 @@ public class Player : MonoBehaviour
         objectHeight = transform.GetComponent<SpriteRenderer>().bounds.size.y / 2;
     }
 
-    private void Update()
+    public void Update()
     {
         if (!m_IsSelected) return;
         horizontal = Input.GetAxis("Horizontal");
@@ -56,12 +56,12 @@ public class Player : MonoBehaviour
             Jump();
         }
 
-        if(HoldTheButtonCheck())
-        {
-            Debug.Log("Holding button");
-            PlatformScript pls = GameObject.Find("Platform").GetComponent<PlatformScript>();
-            pls.Trigger();
-        }
+        //if(HoldTheButtonCheck())
+        //{
+        //    Debug.Log("Holding button");
+        //    PlatformScript pls = GameObject.Find("Platform").GetComponent<PlatformScript>();
+        //    pls.Trigger();
+        //}
     }
 
     // Update is called once per frame
@@ -120,7 +120,7 @@ public class Player : MonoBehaviour
 
     public bool HoldTheButtonCheck()
     {
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(m_groundCheckCollider.position, 0.1f, m_buttonlayerMask);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(m_groundCheckCollider.position, 0.2f, m_buttonlayerMask);
         if(colliders.Length > 0)
         {
             return true;
@@ -160,14 +160,6 @@ public class Player : MonoBehaviour
         {
             GameController controller = GameObject.Find("GameController").GetComponent<GameController>();
             controller.WinGame();
-        }
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if(collision.gameObject.tag == "Player")
-        {
-
         }
     }
 
