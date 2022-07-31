@@ -27,6 +27,7 @@ public class Player : MonoBehaviour
 
     private Animator m_animator;
     private Rigidbody2D m_rigidbody2D;
+    private Vector2 m_lastVelocity;
 
     private float objectWidth;
     private float objectHeight;
@@ -56,6 +57,7 @@ public class Player : MonoBehaviour
             Jump();
         }
 
+        m_lastVelocity = m_rigidbody2D.velocity;
         //if(HoldTheButtonCheck())
         //{
         //    Debug.Log("Holding button");
@@ -158,7 +160,24 @@ public class Player : MonoBehaviour
         else if (collision.gameObject.tag == "Gate")
         {
             GameController controller = GameObject.Find("GameController").GetComponent<GameController>();
-            controller.WinGame();
+            controller.PlayerPassTheGate(this.gameObject);
+        }
+        else if(collision.gameObject.tag == "Punji")
+        {
+            Camera.main.GetComponent<CameraShake>().Shake();
+        }
+
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            var speed = m_lastVelocity.magnitude;
+            var direction = Vector3.Reflect(m_lastVelocity.normalized, collision.contacts[0].normal);
+            //m_rigidbody2D.velocity = (direction * Mathf.Max(speed, 0f) + new Vector3(0f, 5f));
+            m_rigidbody2D.velocity = direction * Mathf.Max(speed + 2.5f, 0f);
+
         }
     }
 

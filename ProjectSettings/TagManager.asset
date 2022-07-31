@@ -8,6 +8,8 @@ TagManager:
   - Gate
   - Button
   - TileMap
+  - Gold
+  - Punji
   layers:
   - Default
   - TransparentFX

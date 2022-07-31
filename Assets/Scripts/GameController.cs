@@ -14,7 +14,7 @@ public class GameController : MonoBehaviour
 
     private Vector3 m_screenBounds;
     private bool m_isGateOpened;
-
+    private int m_playerPassed;
 
     private void Awake()
     {
@@ -25,6 +25,7 @@ public class GameController : MonoBehaviour
         m_isGateOpened = false;
         m_buttonScript = GameObject.Find("Button").GetComponent<ButtonScript>();
         m_grumpy.SetSelected(true);
+        m_playerPassed = 0;
     }
 
     // Update is called once per frame
@@ -123,6 +124,19 @@ public class GameController : MonoBehaviour
     public void WinGame()
     {
         Debug.Log("WIN WIN WIN");
+        GameObject.Find("LevelLoader").GetComponent<LevelLoader>().LoadNextLevel();
+    }
 
+    public void PlayerPassTheGate(GameObject go)
+    {
+        if (m_isGateOpened)
+        {
+            go.SetActive(false);
+            m_playerPassed++;
+        }
+        if (m_playerPassed == 2)
+        {
+            WinGame();
+        }
     }
 }
