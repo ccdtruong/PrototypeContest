@@ -76,4 +76,10 @@ public class GameController : MonoBehaviour
     {
         Debug.Log("WIN WIN WIN");
     }
+
+    public void LoseGame()
+    {
+        Debug.Log("LOST LOST LOST");
+        Application.Quit();
+    }
 }

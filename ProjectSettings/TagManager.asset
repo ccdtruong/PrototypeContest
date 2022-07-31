@@ -8,6 +8,7 @@ TagManager:
   - Gate
   - Button
   - TileMap
+  - RigidObjects
   layers:
   - Default
   - TransparentFX
