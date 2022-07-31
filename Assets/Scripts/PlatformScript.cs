@@ -19,8 +19,8 @@ public class PlatformScript : MonoBehaviour
 
     private bool m_isActive;
     private bool m_isReached;
-    private Vector2 m_initEndPos;
-    private Vector2 m_initStartPos;
+    private Vector3 m_initEndPos;
+    private Vector3 m_initStartPos;
 
     [SerializeField] private PLATFORMTYPE m_platformType;
     public void Activate()
@@ -68,7 +68,7 @@ public class PlatformScript : MonoBehaviour
                 return;
             }
             Debug.Log("Move End");
-            Vector2 pos = transform.position;
+            Vector3 pos = transform.position;
             pos.y += m_speed * Time.deltaTime;
             transform.position = pos;
         }
@@ -79,7 +79,7 @@ public class PlatformScript : MonoBehaviour
                 m_isReached = true;
                 return;
             }
-            Vector2 pos = transform.position;
+            Vector3 pos = transform.position;
             pos.y -= m_speed * Time.deltaTime;
             transform.position = pos;
         }
@@ -97,7 +97,7 @@ public class PlatformScript : MonoBehaviour
                 m_isReached = true;
                 return;
             }
-            Vector2 pos = transform.position;
+            Vector3 pos = transform.position;
             pos.y -= m_speed * Time.deltaTime;
             transform.position = pos;
         }
@@ -108,7 +108,7 @@ public class PlatformScript : MonoBehaviour
                 m_isReached = true;
                 return;
             }
-            Vector2 pos = transform.position;
+            Vector3 pos = transform.position;
             pos.y += m_speed * Time.deltaTime;
             transform.position = pos;
         }
