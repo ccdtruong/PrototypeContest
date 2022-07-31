@@ -17,6 +17,9 @@ public class Player : MonoBehaviour
     [SerializeField]
     LayerMask m_buttonlayerMask;
 
+
+    private GameController m_controller;
+
     private float horizontal;
 
     private bool m_IsSelected;
@@ -35,6 +38,11 @@ public class Player : MonoBehaviour
 
 
     private bool m_facingRight = true;
+
+    private void Awake()
+    {
+        m_controller = GameObject.Find("GameController").GetComponent<GameController>();
+    }
     // Start is called before the first frame update
     public void Start()
     {
@@ -152,19 +160,27 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.tag == "Key")
         {
-            GameController controller = GameObject.Find("GameController").GetComponent<GameController>();
-            controller.OpenGate();
+            //GameController controller = GameObject.Find("GameController").GetComponent<GameController>();
+            //controller.OpenGate();
+            m_controller.OpenGate();
             collision.gameObject.SetActive(false);
             Debug.Log("Get Key");
         }
         else if (collision.gameObject.tag == "Gate")
         {
-            GameController controller = GameObject.Find("GameController").GetComponent<GameController>();
-            controller.PlayerPassTheGate(this.gameObject);
+            //GameController controller = GameObject.Find("GameController").GetComponent<GameController>();
+            //controller.PlayerPassTheGate(this.gameObject);
+            m_controller.PlayerPassTheGate(this.gameObject);
         }
         else if(collision.gameObject.tag == "Punji")
         {
+            m_controller.Heart--;
             Camera.main.GetComponent<CameraShake>().Shake();
+        }
+        else if(collision.gameObject.tag == "Gold")
+        {
+            m_controller.Coin += 10;
+            collision.gameObject.SetActive(false);
         }
 
     }
@@ -184,8 +200,9 @@ public class Player : MonoBehaviour
     //prevent players from running out of the screen
     private void LateUpdate()
     {
-        GameController controller = GameObject.Find("GameController").GetComponent<GameController>();
-        Vector3 bounds = controller.GetBounds();
+        //GameController controller = GameObject.Find("GameController").GetComponent<GameController>();
+        //Vector3 bounds = controller.GetBounds();
+        Vector3 bounds = m_controller.GetBounds();
         Vector3 viewPos = transform.position;
         viewPos.x = Mathf.Clamp(viewPos.x, bounds.x * -1 +  objectWidth - delta, bounds.x - objectWidth + delta);
         viewPos.y = Mathf.Clamp(viewPos.y, bounds.y * -1 + objectHeight - delta, bounds.y - objectHeight + delta);

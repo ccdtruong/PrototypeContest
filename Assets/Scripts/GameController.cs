@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
@@ -16,6 +17,35 @@ public class GameController : MonoBehaviour
     private bool m_isGateOpened;
     private int m_playerPassed;
 
+
+    [SerializeField] private Text heartLabel;
+    private int heart;
+    public int Heart
+    {
+        get { return heart; }
+        set 
+        { 
+            heart = value;
+            heartLabel.GetComponent<Text>().text = "x" + heart;
+            if(heart == 0)
+            {
+                Debug.Log("GameOver");
+                GameObject.Find("LevelLoader").GetComponent<LevelLoader>().Reload();
+            }
+        }
+    }
+
+    [SerializeField] private Text coinLabel;
+    private int coin;
+    public int Coin
+    {
+        get { return coin; }
+        set { 
+            coin = value;
+            coinLabel.GetComponent<Text>().text = "x" + coin;
+        }
+    }
+
     private void Awake()
     {
         m_screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
@@ -26,6 +56,8 @@ public class GameController : MonoBehaviour
         m_buttonScript = GameObject.Find("Button").GetComponent<ButtonScript>();
         m_grumpy.SetSelected(true);
         m_playerPassed = 0;
+        Coin = 0;
+        Heart = 2;
     }
 
     // Update is called once per frame
@@ -124,7 +156,8 @@ public class GameController : MonoBehaviour
     public void WinGame()
     {
         Debug.Log("WIN WIN WIN");
-        GameObject.Find("LevelLoader").GetComponent<LevelLoader>().LoadNextLevel();
+        //GameObject.Find("LevelLoader").GetComponent<LevelLoader>().LoadNextLevel();
+        GameObject.Find("LevelLoader").GetComponent<LevelLoader>().Reload();
     }
 
     public void PlayerPassTheGate(GameObject go)
