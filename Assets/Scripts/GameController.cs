@@ -81,5 +81,8 @@ public class GameController : MonoBehaviour
     {
         Debug.Log("LOST LOST LOST");
         Application.Quit();
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
     }
 }
