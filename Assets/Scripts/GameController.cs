@@ -80,10 +80,35 @@ public class GameController : MonoBehaviour
         }
     }
 
-    //public void OpenGate()
-    //{
-    //    m_isGateOpened = true;
-    //}
+    public void OpenGate()
+    {
+        m_isGateOpened = true;
+        //Camera zoom in
+
+        GameObject.Find("CameraZoom").GetComponent<CameraZoom>().ZoomIn();
+
+        StartCoroutine(TransformGateState(2f, CameraBehavior.ZoomIn));
+        StartCoroutine(TransformGateState(2.5f, CameraBehavior.ZoomOut));
+
+    }
+
+    IEnumerator TransformGateState(float sec, CameraBehavior cbh)
+    {
+        if (cbh == CameraBehavior.ZoomIn)
+        {
+            yield return new WaitForSeconds(sec);
+            //Change Gate's spriteRenderer
+            GameObject gateObject = GameObject.Find("Gate");
+            SpriteRenderer gateSR = gateObject.GetComponent<SpriteRenderer>();
+            gateSR.sprite = Resources.Load<Sprite>("Environment/DoorUnlocked");
+        }
+        else if (cbh == CameraBehavior.ZoomOut)
+        {
+            yield return new WaitForSeconds(sec);
+            GameObject.Find("CameraZoom").GetComponent<CameraZoom>().ZoomOut();
+
+        }
+    }
 
     public void SetGateState(bool state)
     {
@@ -98,5 +123,6 @@ public class GameController : MonoBehaviour
     public void WinGame()
     {
         Debug.Log("WIN WIN WIN");
+
     }
 }

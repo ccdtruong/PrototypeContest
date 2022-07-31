@@ -151,8 +151,7 @@ public class Player : MonoBehaviour
         if (collision.gameObject.tag == "Key")
         {
             GameController controller = GameObject.Find("GameController").GetComponent<GameController>();
-            //controller.OpenGate();
-            controller.SetGateState(true);
+            controller.OpenGate();
             collision.gameObject.SetActive(false);
             Debug.Log("Get Key");
         }
