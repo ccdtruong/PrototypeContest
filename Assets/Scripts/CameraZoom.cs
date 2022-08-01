@@ -32,7 +32,7 @@ public class CameraZoom : MonoBehaviour
     {
         cam = Camera.main;
         targetZoom = cam.orthographicSize;
-        defaultPosition = new Vector3(0f, 0f, -10f);
+        defaultPosition = cam.transform.position;
         m_cameraBehavior = CameraBehavior.Idle;
     }
 
@@ -47,7 +47,7 @@ public class CameraZoom : MonoBehaviour
         }
         else
         {
-            cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, 5f, 0.015f);
+            cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, targetZoom, 0.015f);
             cam.transform.position = Vector3.Lerp(cam.transform.position, defaultPosition, 0.015f);
         }
 

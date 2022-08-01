@@ -8,10 +8,14 @@ public class Player : MonoBehaviour
     private float m_speed;
 
     [SerializeField]
+    private float m_jumpSpeed;
+
+    [SerializeField]
     private float m_jumpForce;
 
     [SerializeField]
     private Transform m_groundCheckCollider;
+    
     [SerializeField]
     LayerMask m_groundlayerMask;
     [SerializeField]
@@ -20,12 +24,14 @@ public class Player : MonoBehaviour
 
     private GameController m_controller;
 
-    private float horizontal;
+    [SerializeField]
+    ParticleSystem m_sparksParticles;
 
+    private float horizontal;
     private bool m_IsSelected;
     private bool m_isJumping;
     private bool m_isGrounded;
-
+    private bool m_isSparking;
     private Vector3 m_screenBounds;
 
     private Animator m_animator;
@@ -65,6 +71,7 @@ public class Player : MonoBehaviour
             Jump();
         }
 
+        //Debug.Log("isJumping = " + m_isJumping);
         m_lastVelocity = m_rigidbody2D.velocity;
         //if(HoldTheButtonCheck())
         //{
@@ -79,11 +86,16 @@ public class Player : MonoBehaviour
     {
         if (!m_IsSelected) return;
         GroundCheck();
-        //Debug.Log("isGround" + m_isGrounded);
+        Debug.Log("isGround = " + m_isGrounded);
         if (m_isGrounded)
         {
             m_animator.SetBool("isJumping", false);
             m_isJumping = false;
+            Debug.Log("isJumpingFalse");
+        } else
+        {
+            Debug.Log("isJumpingTrue " + m_isJumping);
+            if (m_isJumping) m_animator.SetBool("isJumping", true);
         }
         Move(horizontal);
     }
@@ -105,7 +117,6 @@ public class Player : MonoBehaviour
             m_animator.SetBool("isJumping", true);
             m_rigidbody2D.velocity = Vector2.up * m_jumpForce;
             m_isJumping = true;
-            m_isGrounded = false;
         }
     }
 
@@ -140,7 +151,7 @@ public class Player : MonoBehaviour
 
     public void Move(float dir)
     {
-        if (dir == 0)
+        if (dir == 0 || m_isSparking)
         {
             m_animator.SetBool("isWalking", false);
             return;
@@ -150,10 +161,31 @@ public class Player : MonoBehaviour
         {
             Flip();
         }
-        m_animator.SetBool("isWalking", true);
-        float xVal = dir * m_speed * Time.fixedDeltaTime;
+        if (m_isGrounded)
+        {
+            m_animator.SetBool("isWalking", true);
+        }
+        float speed = m_speed;
+        if (!m_isGrounded)
+        {
+            speed = m_jumpSpeed;
+        }
+        float xVal = dir * speed * Time.fixedDeltaTime;
         Vector2 targetVelocity = new Vector2(xVal, m_rigidbody2D.velocity.y);
         m_rigidbody2D.velocity = targetVelocity;
+        //Debug.Log("speed " + name + " = " + m_rigidbody2D.velocity.ToString());
+    }
+
+    void SparkBurst()
+    {
+        m_sparksParticles.Emit(20);
+    }
+
+    void SparkStop()
+    {
+        //Debug.Log("End spark");
+        m_animator.SetBool("isFocus", false);
+        m_isSparking = false;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -164,7 +196,7 @@ public class Player : MonoBehaviour
             //controller.OpenGate();
             m_controller.OpenGate();
             collision.gameObject.SetActive(false);
-            Debug.Log("Get Key");
+            //Debug.Log("Get Key");
         }
         else if (collision.gameObject.tag == "Gate")
         {
@@ -185,18 +217,6 @@ public class Player : MonoBehaviour
 
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Player")
-        {
-            var speed = m_lastVelocity.magnitude;
-            var direction = Vector3.Reflect(m_lastVelocity.normalized, collision.contacts[0].normal);
-            //m_rigidbody2D.velocity = (direction * Mathf.Max(speed, 0f) + new Vector3(0f, 5f));
-            m_rigidbody2D.velocity = direction * Mathf.Max(speed + 2.5f, 0f);
-
-        }
-    }
-
     //prevent players from running out of the screen
     private void LateUpdate()
     {
@@ -209,4 +229,24 @@ public class Player : MonoBehaviour
         transform.position = viewPos;
     }
 
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            Vector2 posA = transform.position;
+            Vector2 posB = collision.gameObject.transform.position;
+            Vector2 collisionVector = posB - posA;
+            m_rigidbody2D.velocity = - collisionVector * m_jumpForce;
+            Debug.Log("collisionVecter " + name + " = " + m_rigidbody2D.velocity.ToString());
+            if ((collisionVector.x < 0 && m_facingRight)
+                || (collisionVector.x > 0 && !m_facingRight))
+            {
+                Flip();
+            }
+            SparkBurst();
+            m_isSparking = true;
+            m_animator.SetBool("isFocus", true);
+            Invoke("SparkStop", 0.3f);
+        }
+    }
 }

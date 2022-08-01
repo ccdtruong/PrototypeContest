@@ -4,17 +4,16 @@ using UnityEngine;
 
 public class ButtonScript : MonoBehaviour
 {
+    SpriteRenderer m_spriteRenderer;
     [SerializeField] PlatformScript m_platform;
-    private SpriteRenderer m_spriteRenderer;
-    private Collider2D m_collider;
-    private const float m_releaseOffset = -0.3f;
-    private const float m_pressOffset = -0.45f;
+    [SerializeField] Sprite m_activeSprite;
+    Sprite m_deactiveSprite;
+
     // Start is called before the first frame update
     void Start()
     {
         m_spriteRenderer = GetComponent<SpriteRenderer>();
-        m_collider = GetComponent<Collider2D>();
-        OnRelease();
+        m_deactiveSprite = m_spriteRenderer.sprite;
     }
 
     // Update is called once per frame
@@ -23,24 +22,21 @@ public class ButtonScript : MonoBehaviour
         
     }
 
-    public void OnPressed()
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        m_spriteRenderer.sprite = Resources.Load<Sprite>("Environment/platformPack_tile063");
-        m_collider.offset = new Vector2(0f, m_pressOffset);
-
+        if(collision.gameObject.tag == "Player" || collision.gameObject.tag == "RigidObjects")
+        {
+            m_platform.Activate();
+            m_spriteRenderer.sprite = m_activeSprite;
+        }
     }
 
-    public void OnRelease()
+    private void OnCollisionExit2D(Collision2D collision)
     {
-        m_spriteRenderer.sprite = Resources.Load<Sprite>("Environment/platformPack_tile062");
-        m_collider.offset = new Vector2(0f, m_releaseOffset);
+        if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "RigidObjects")
+        {
+            m_platform.Deactivate();
+            m_spriteRenderer.sprite = m_deactiveSprite;
+        }
     }
-
-    //private void OnCollisionEnter2D(Collision2D collision)
-    //{
-    //    if(collision.gameObject.tag == "Player")
-    //    {
-    //        m_platform.Trigger();
-    //    }
-    //}
 }

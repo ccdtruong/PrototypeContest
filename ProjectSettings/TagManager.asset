@@ -8,6 +8,7 @@ TagManager:
   - Gate
   - Button
   - TileMap
+  - RigidObjects
   - Gold
   - Punji
   layers:

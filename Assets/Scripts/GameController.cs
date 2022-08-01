@@ -11,8 +11,6 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private Player m_rebellious;
 
-    private ButtonScript m_buttonScript;
-
     private Vector3 m_screenBounds;
     private bool m_isGateOpened;
     private int m_playerPassed;
@@ -53,7 +51,6 @@ public class GameController : MonoBehaviour
     void Start()
     {
         m_isGateOpened = false;
-        m_buttonScript = GameObject.Find("Button").GetComponent<ButtonScript>();
         m_grumpy.SetSelected(true);
         m_playerPassed = 0;
         Coin = 0;
@@ -66,27 +63,6 @@ public class GameController : MonoBehaviour
         if (Input.GetButtonDown("Switch"))
         {
             SwitchCharacter();
-        }
-
-        //Player hold button
-        if (m_grumpy.HoldTheButtonCheck() || m_rebellious.HoldTheButtonCheck())
-        {
-            PlatformScript pls = GameObject.Find("Platform").GetComponent<PlatformScript>();
-            pls.Trigger();
-            //SpriteRenderer buttonSprite = GameObject.Find("Button").GetComponent<SpriteRenderer>();
-            //buttonSprite.sprite = Resources.Load<Sprite>("Environment/platformPack_tile063");
-            ///ButtonScript bts = GameObject.Find("Button").GetComponent<ButtonScript>();
-            //bts.OnPressed();
-            m_buttonScript.OnPressed();
-
-        }
-        else
-        {
-            //SpriteRenderer buttonSprite = GameObject.Find("Button").GetComponent<SpriteRenderer>();
-            //buttonSprite.sprite = Resources.Load<Sprite>("Environment/platformPack_tile062");
-            //ButtonScript bts = GameObject.Find("Button").GetComponent<ButtonScript>();
-            //bts.OnRelease();
-            m_buttonScript.OnRelease();
         }
     }
 
@@ -131,15 +107,13 @@ public class GameController : MonoBehaviour
         {
             yield return new WaitForSeconds(sec);
             //Change Gate's spriteRenderer
-            GameObject gateObject = GameObject.Find("Gate");
-            SpriteRenderer gateSR = gateObject.GetComponent<SpriteRenderer>();
-            gateSR.sprite = Resources.Load<Sprite>("Environment/DoorUnlocked");
+            GateScript gateObject = GameObject.Find("Gate").GetComponent<GateScript>();
+            gateObject.OpenGate();
         }
         else if (cbh == CameraBehavior.ZoomOut)
         {
             yield return new WaitForSeconds(sec);
             GameObject.Find("CameraZoom").GetComponent<CameraZoom>().ZoomOut();
-
         }
     }
 
@@ -156,8 +130,8 @@ public class GameController : MonoBehaviour
     public void WinGame()
     {
         Debug.Log("WIN WIN WIN");
-        //GameObject.Find("LevelLoader").GetComponent<LevelLoader>().LoadNextLevel();
-        GameObject.Find("LevelLoader").GetComponent<LevelLoader>().Reload();
+        GameObject.Find("LevelLoader").GetComponent<LevelLoader>().LoadNextLevel();
+        //GameObject.Find("LevelLoader").GetComponent<LevelLoader>().Reload();
     }
 
     public void PlayerPassTheGate(GameObject go)
@@ -171,5 +145,14 @@ public class GameController : MonoBehaviour
         {
             WinGame();
         }
+    }
+
+    public void LoseGame()
+    {
+        Debug.Log("LOST LOST LOST");
+        Application.Quit();
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
     }
 }
