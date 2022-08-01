@@ -51,6 +51,7 @@ public class ExplosionBox : MonoBehaviour
 
     void ExplosionCheck()
     {
+        Debug.Log("v = " + m_rigidbody2D.velocity.y);
         if (Mathf.Abs(m_rigidbody2D.velocity.y) >= m_maxYVelocity)
         {
             m_isExploded = true;
