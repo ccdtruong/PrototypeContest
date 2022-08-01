@@ -45,7 +45,8 @@ public class PlatformScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!m_isActive)
+        Debug.Log("Hello");
+        if (!m_isActive)
         {
             MoveToStart();
             return;
@@ -83,7 +84,6 @@ public class PlatformScript : MonoBehaviour
             pos.y -= m_speed * Time.deltaTime;
             transform.position = pos;
         }
-        m_isActive = false;
     }
     
     void MoveToStart()
