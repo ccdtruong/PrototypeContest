@@ -217,18 +217,6 @@ public class Player : MonoBehaviour
 
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Player")
-        {
-            var speed = m_lastVelocity.magnitude;
-            var direction = Vector3.Reflect(m_lastVelocity.normalized, collision.contacts[0].normal);
-            //m_rigidbody2D.velocity = (direction * Mathf.Max(speed, 0f) + new Vector3(0f, 5f));
-            m_rigidbody2D.velocity = direction * Mathf.Max(speed + 2.5f, 0f);
-
-        }
-    }
-
     //prevent players from running out of the screen
     private void LateUpdate()
     {

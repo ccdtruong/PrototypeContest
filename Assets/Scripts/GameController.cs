@@ -67,27 +67,6 @@ public class GameController : MonoBehaviour
         {
             SwitchCharacter();
         }
-
-        //Player hold button
-        if (m_grumpy.HoldTheButtonCheck() || m_rebellious.HoldTheButtonCheck())
-        {
-            PlatformScript pls = GameObject.Find("Platform").GetComponent<PlatformScript>();
-            pls.Trigger();
-            //SpriteRenderer buttonSprite = GameObject.Find("Button").GetComponent<SpriteRenderer>();
-            //buttonSprite.sprite = Resources.Load<Sprite>("Environment/platformPack_tile063");
-            ///ButtonScript bts = GameObject.Find("Button").GetComponent<ButtonScript>();
-            //bts.OnPressed();
-            m_buttonScript.OnPressed();
-
-        }
-        else
-        {
-            //SpriteRenderer buttonSprite = GameObject.Find("Button").GetComponent<SpriteRenderer>();
-            //buttonSprite.sprite = Resources.Load<Sprite>("Environment/platformPack_tile062");
-            //ButtonScript bts = GameObject.Find("Button").GetComponent<ButtonScript>();
-            //bts.OnRelease();
-            m_buttonScript.OnRelease();
-        }
     }
 
     private void FixedUpdate()
