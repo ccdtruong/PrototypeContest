@@ -21,11 +21,11 @@ public class GameController : MonoBehaviour
     public int Heart
     {
         get { return heart; }
-        set 
-        { 
+        set
+        {
             heart = value;
             heartLabel.GetComponent<Text>().text = "x" + heart;
-            if(heart == 0)
+            if (heart == 0)
             {
                 Debug.Log("GameOver");
                 GameObject.Find("LevelLoader").GetComponent<LevelLoader>().Reload();
@@ -38,7 +38,8 @@ public class GameController : MonoBehaviour
     public int Coin
     {
         get { return coin; }
-        set { 
+        set
+        {
             coin = value;
             coinLabel.GetComponent<Text>().text = "x" + coin;
         }
@@ -55,6 +56,7 @@ public class GameController : MonoBehaviour
         m_playerPassed = 0;
         Coin = 0;
         Heart = 2;
+        Invoke("PlayBackgroundMusic", .5f);
     }
 
     // Update is called once per frame
@@ -68,6 +70,14 @@ public class GameController : MonoBehaviour
 
     private void FixedUpdate()
     {
+    }
+
+    public void PlayBackgroundMusic()
+    {
+        //if (!SoundManager.IsPlaying("background"))
+        {
+            SoundManager.PlaySound("background");
+        }
     }
 
     public Vector3 GetBounds()
