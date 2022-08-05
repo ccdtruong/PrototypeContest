@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class Player : MonoBehaviour
 {
@@ -64,9 +65,9 @@ public class Player : MonoBehaviour
     public void Update()
     {
         if (!m_IsSelected) return;
-        horizontal = Input.GetAxis("Horizontal");
+        horizontal = CrossPlatformInputManager.GetAxis("Horizontal");
 
-        if (Input.GetButtonDown("Jump"))
+        if (CrossPlatformInputManager.GetButtonDown("Jump"))
         {
             Jump();
         }
@@ -131,7 +132,7 @@ public class Player : MonoBehaviour
     public void GroundCheck()
     {
         m_isGrounded = false;
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(m_groundCheckCollider.position, 0.1f, m_groundlayerMask);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(m_groundCheckCollider.position, 0.05f, m_groundlayerMask);
         //Debug.Log("colliders.Length = " + colliders.Length);
         if (colliders.Length > 0)
         {
