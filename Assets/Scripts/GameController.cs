@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class GameController : MonoBehaviour
 {
@@ -31,7 +32,7 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Switch"))
+        if (CrossPlatformInputManager.GetButtonDown("Switch"))
         {
             SwitchCharacter();
         }
