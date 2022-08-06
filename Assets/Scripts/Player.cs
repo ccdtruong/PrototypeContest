@@ -194,7 +194,7 @@ public class Player : MonoBehaviour
         {
             //GameController controller = GameObject.Find("GameController").GetComponent<GameController>();
             //controller.OpenGate();
-            SoundManager.PlaySound("ting");
+            SoundManager.Instance.Play("ting");
             m_controller.OpenGate();
             collision.gameObject.SetActive(false);
             //Debug.Log("Get Key");
@@ -212,7 +212,7 @@ public class Player : MonoBehaviour
         }
         else if(collision.gameObject.tag == "Gold")
         {
-            SoundManager.PlaySound("ting");
+            SoundManager.Instance.Play("ting");
             m_controller.Coin += 10;
             collision.gameObject.SetActive(false);
         }
@@ -245,7 +245,7 @@ public class Player : MonoBehaviour
             {
                 Flip();
             }
-            SoundManager.PlaySound("collide");
+            SoundManager.Instance.Play("collide");
             SparkBurst();
             m_isSparking = true;
             m_animator.SetBool("isFocus", true);
