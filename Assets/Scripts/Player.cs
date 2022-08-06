@@ -254,4 +254,22 @@ public class Player : MonoBehaviour
             Invoke("SparkStop", 0.3f);
         }
     }
+
+    public IEnumerator SmallJump(){
+        for (int i = 0; i < 5; i++) {
+            float y = transform.position.y + 0.1f;
+            float x = transform.position.x;
+            transform.position = new Vector2(x, y);
+            yield return new WaitForSeconds(.1f);
+        }
+    }
+
+    public IEnumerator MoveHere(Transform destination) {
+        
+        while (transform.position.x < destination.position.x)
+        {
+            Move(0.5f);
+            yield return new WaitForSeconds(.01f);
+        }
+    }
 }
