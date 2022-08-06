@@ -65,8 +65,9 @@ public class Player : MonoBehaviour
     public void Update()
     {
         if (!m_IsSelected) return;
+        //horizontal = Input.GetAxis("Horizontal");
         horizontal = CrossPlatformInputManager.GetAxis("Horizontal");
-
+        Debug.Log("hor = " + horizontal);
         if (CrossPlatformInputManager.GetButtonDown("Jump"))
         {
             Jump();
