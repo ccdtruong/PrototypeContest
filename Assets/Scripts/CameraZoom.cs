@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-enum CameraBehavior
+public enum CameraBehavior
 {
     Idle, ZoomIn, ZoomOut
 }
@@ -13,8 +13,6 @@ public class CameraZoom : MonoBehaviour
     private CameraBehavior m_cameraBehavior;
     private Camera cam;
     private float targetZoom;
-    private float zoomFactor = 3f;
-    private float zoomLerpSpeed = 10;
 
     public void ZoomIn()
     {
@@ -57,5 +55,10 @@ public class CameraZoom : MonoBehaviour
         //targetZoom = Mathf.Clamp(targetZoom, 1.5f, 8f);
         //cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, targetZoom, Time.deltaTime * zoomLerpSpeed);
 
+    }
+
+    public CameraBehavior GetCameraBehavior()
+    {
+        return m_cameraBehavior;
     }
 }

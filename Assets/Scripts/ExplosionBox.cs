@@ -33,6 +33,8 @@ public class ExplosionBox : MonoBehaviour
         {
             var dur = m_fireParticles.main.duration;
             m_fireParticles.Play();
+            SoundManager.Instance.Play("explosion");
+            Camera.main.GetComponent<CameraShake>().Shake();
             Invoke("DestroyObject", dur);
         }
     }

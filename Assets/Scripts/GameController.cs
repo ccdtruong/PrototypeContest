@@ -16,7 +16,7 @@ public class GameController : MonoBehaviour
     private Vector3 m_screenBounds;
     private bool m_isGateOpened;
     private int m_playerPassed;
-
+    private CameraZoom m_cameraZoom;
 
     [SerializeField] private Text heartLabel;
     private int heart;
@@ -50,8 +50,10 @@ public class GameController : MonoBehaviour
     {
         m_screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
     }
+
     void Start()
     {
+        m_cameraZoom = GameObject.Find("CameraZoom").GetComponent<CameraZoom>();
         m_isGateOpened = false;
         m_grumpy.SetSelected(true);
         m_playerPassed = 0;
@@ -71,6 +73,11 @@ public class GameController : MonoBehaviour
         {
             LoseGame();
         }
+        if (m_cameraZoom.GetCameraBehavior() == CameraBehavior.Idle)
+        {
+            m_screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
+        }
+        Debug.Log(m_screenBounds);
     }
 
     private void FixedUpdate()
@@ -109,7 +116,7 @@ public class GameController : MonoBehaviour
         m_isGateOpened = true;
         //Camera zoom in
 
-        GameObject.Find("CameraZoom").GetComponent<CameraZoom>().ZoomIn();
+        m_cameraZoom.ZoomIn();
 
         StartCoroutine(TransformGateState(2f, CameraBehavior.ZoomIn));
         StartCoroutine(TransformGateState(2.5f, CameraBehavior.ZoomOut));
@@ -128,7 +135,7 @@ public class GameController : MonoBehaviour
         else if (cbh == CameraBehavior.ZoomOut)
         {
             yield return new WaitForSeconds(sec);
-            GameObject.Find("CameraZoom").GetComponent<CameraZoom>().ZoomOut();
+            m_cameraZoom.ZoomOut();
         }
     }
 
@@ -151,6 +158,7 @@ public class GameController : MonoBehaviour
 
     public void PlayerPassTheGate(GameObject go)
     {
+        Debug.Log(go.name);
         if (m_isGateOpened)
         {
             go.SetActive(false);

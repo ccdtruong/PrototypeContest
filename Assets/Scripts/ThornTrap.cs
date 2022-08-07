@@ -8,8 +8,9 @@ public class ThornTrap : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
+            Camera.main.GetComponent<CameraShake>().Shake();
             GameController controller = GameObject.Find("GameController").GetComponent<GameController>();
-            controller.LoseGame();
+            controller.Heart--;
         }
     }
 }

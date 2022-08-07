@@ -67,7 +67,7 @@ public class Player : MonoBehaviour
         if (!m_IsSelected) return;
         //horizontal = Input.GetAxis("Horizontal");
         horizontal = CrossPlatformInputManager.GetAxis("Horizontal");
-        Debug.Log("hor = " + horizontal);
+        //Debug.Log("hor = " + horizontal);
         if (CrossPlatformInputManager.GetButtonDown("Jump"))
         {
             Jump();
@@ -194,23 +194,18 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.tag == "Key")
         {
-            //GameController controller = GameObject.Find("GameController").GetComponent<GameController>();
-            //controller.OpenGate();
             SoundManager.Instance.Play("ting");
             m_controller.OpenGate();
             collision.gameObject.SetActive(false);
-            //Debug.Log("Get Key");
         }
         else if (collision.gameObject.tag == "Gate")
         {
-            //GameController controller = GameObject.Find("GameController").GetComponent<GameController>();
-            //controller.PlayerPassTheGate(this.gameObject);
             m_controller.PlayerPassTheGate(this.gameObject);
         }
         else if(collision.gameObject.tag == "Punji")
         {
-            m_controller.Heart--;
             Camera.main.GetComponent<CameraShake>().Shake();
+            m_controller.Heart--;
         }
         else if(collision.gameObject.tag == "Gold")
         {

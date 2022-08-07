@@ -83,6 +83,13 @@ MonoBehaviour:
     isLoop: 0
     playOnAwake: 0
     volume: 0.5
+  - type: 0
+    source: {fileID: 0}
+    clipName: explosion
+    audioClip: {fileID: 8300000, guid: 32083c8848a96e84583c809ddd267962, type: 3}
+    isLoop: 0
+    playOnAwake: 0
+    volume: 0.5
 --- !u!114 &5104359069473271544
 MonoBehaviour:
   m_ObjectHideFlags: 0
