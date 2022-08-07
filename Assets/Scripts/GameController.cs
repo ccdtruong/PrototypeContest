@@ -81,7 +81,7 @@ public class GameController : MonoBehaviour
     {
         //if (!SoundManager.IsPlaying("background"))
         {
-            SoundManager.PlaySound("background");
+            SoundManager.Instance.Play("background");
         }
     }
 

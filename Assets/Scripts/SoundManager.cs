@@ -1,54 +1,84 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+using UnityEngine.Audio;
+public enum SoundType
+{
+    SFX,
+    Music
+}
+[System.Serializable]
+public class Sound
+{
+    public SoundType type;
+    [HideInInspector] public AudioSource source;
+    public string clipName;
+    public AudioClip audioClip;
+    public bool isLoop;
+    public bool playOnAwake;
+    [Range(0, 1)]
+    public float volume = 0.5f;
+}
 
 public class SoundManager : MonoBehaviour
 {
-    public static AudioClip collideSound;
-    public static AudioClip backgroundMusic;
-    public static AudioClip tingSound;
+    public static SoundManager Instance;
 
-    private static AudioSource m_audioSource;
-
-    private void Start()
+    [SerializeField] private AudioMixerGroup musicGroup;
+    [SerializeField] private AudioMixerGroup sfxGroup;
+    [SerializeField] private Sound[] sounds;
+    private void Awake()
     {
-        collideSound = Resources.Load<AudioClip>("Sounds/collide");
-        backgroundMusic = Resources.Load<AudioClip>("Sounds/background");
-        tingSound = Resources.Load<AudioClip>("Sounds/ting");
-        m_audioSource = GetComponent<AudioSource>();
-    }
-
-    public static void PlaySound(string clip_name)
-    {
-        switch(clip_name)
+        Instance = this;
+        foreach (Sound s in sounds)
         {
-            case "collide":
-                {
-                    m_audioSource.PlayOneShot(collideSound);
+            s.source = gameObject.AddComponent<AudioSource>();
+            s.source.clip = s.audioClip;
+            s.source.loop = s.isLoop;
+            s.source.volume = s.volume;
+
+            switch (s.type)
+            {
+                case SoundType.Music:
+                    s.source.outputAudioMixerGroup = musicGroup;
                     break;
-                }
-            case "background":
-                {
-                    m_audioSource.clip = backgroundMusic;
-                    m_audioSource.loop = true;
-                    m_audioSource.Play();
+                case SoundType.SFX:
+                    s.source.outputAudioMixerGroup = sfxGroup;
                     break;
-                }
-            case "ting":
-                {
-                    m_audioSource.PlayOneShot(tingSound);
-                    break;
-                }
+            }
+            if (s.playOnAwake)
+                s.source.Play();
         }
     }
-
-    public static void StopSound()
+    public void Play(string clipname)
     {
-        m_audioSource.Stop();
+        Sound s = Array.Find(sounds, dummySound => dummySound.clipName == clipname);
+        if (s == null)
+        {
+            Debug.LogError("Sound:" + clipname + "does NOT exist!");
+            return;
+        }
+        s.source.Play();
     }
 
-    public static bool IsPlaying(string clip_name)
+    public void Stop(string clipname)
     {
-            return m_audioSource.isPlaying;
+        Sound s = Array.Find(sounds, dummySound => dummySound.clipName == clipname);
+        if (s == null)
+        {
+            Debug.LogError("Sound:" + clipname + "does NOT exist!");
+            return;
+        }
+        s.source.Stop();
+    }
+    public void UpdateMixerVol()
+    {
+        musicGroup.audioMixer.SetFloat("musicVol", Mathf.Log10(AudioOptionsManager.musicVol) * 20);
+        musicGroup.audioMixer.SetFloat("sfxVol", Mathf.Log10(AudioOptionsManager.sfxVol) * 20);
+    }
+    public void PlayClickSound()
+    {
+        SoundManager.Instance.Play("click");
     }
 }

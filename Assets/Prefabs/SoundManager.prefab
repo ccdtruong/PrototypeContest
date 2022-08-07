@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7305782013815079551}
-  - component: {fileID: 7305782013815079548}
   - component: {fileID: 7305782013815079549}
+  - component: {fileID: 5104359069473271544}
   m_Layer: 0
   m_Name: SoundManager
   m_TagString: Untagged
@@ -33,102 +33,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &7305782013815079548
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7305782013815079538}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 0
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!114 &7305782013815079549
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -139,5 +43,55 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dc0d72e5cf0b8f941b7b02b572234d27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  musicGroup: {fileID: -5486883128023016677, guid: 4aa359667a596e54a85901a8cfea9521, type: 2}
+  sfxGroup: {fileID: -6816665240627122545, guid: 4aa359667a596e54a85901a8cfea9521, type: 2}
+  sounds:
+  - type: 1
+    source: {fileID: 0}
+    clipName: background
+    audioClip: {fileID: 8300000, guid: 3cc84bfcc75b4d246ab53272781d5dc2, type: 3}
+    isLoop: 1
+    playOnAwake: 1
+    volume: 0.5
+  - type: 0
+    source: {fileID: 0}
+    clipName: collide
+    audioClip: {fileID: 8300000, guid: 3d5a1b5ade433f9468c99ef0dd4eaf85, type: 3}
+    isLoop: 0
+    playOnAwake: 0
+    volume: 0.5
+  - type: 0
+    source: {fileID: 0}
+    clipName: ting
+    audioClip: {fileID: 8300000, guid: 73ecfcdee0bd0194e9c85afcfc9da386, type: 3}
+    isLoop: 0
+    playOnAwake: 0
+    volume: 0.5
+  - type: 0
+    source: {fileID: 0}
+    clipName: click
+    audioClip: {fileID: 8300000, guid: 0994c12e202f342459a4212e7287f7e8, type: 3}
+    isLoop: 0
+    playOnAwake: 0
+    volume: 0.5
+  - type: 1
+    source: {fileID: 0}
+    clipName: gameover
+    audioClip: {fileID: 8300000, guid: 23be4ee707d2f8a498354b86d9c8bb26, type: 3}
+    isLoop: 0
+    playOnAwake: 0
+    volume: 0.5
+--- !u!114 &5104359069473271544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7305782013815079538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21a79c7ed4e4e8e47974bbac1d63682d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
