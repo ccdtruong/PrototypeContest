@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
@@ -28,8 +29,7 @@ public class GameController : MonoBehaviour
             heartLabel.GetComponent<Text>().text = "x" + heart;
             if (heart == 0)
             {
-                Debug.Log("GameOver");
-                GameObject.Find("LevelLoader").GetComponent<LevelLoader>().Reload();
+                LoseGame();
             }
         }
     }
@@ -56,7 +56,7 @@ public class GameController : MonoBehaviour
         m_grumpy.SetSelected(true);
         m_playerPassed = 0;
         Coin = 0;
-        Heart = 2;
+        Heart = 1;
         Invoke("PlayBackgroundMusic", .5f);
     }
 
@@ -66,6 +66,10 @@ public class GameController : MonoBehaviour
         if (CrossPlatformInputManager.GetButtonDown("Switch"))
         {
             SwitchCharacter();
+        }
+        if (heart <= 0)
+        {
+            LoseGame();
         }
     }
 
@@ -160,10 +164,6 @@ public class GameController : MonoBehaviour
 
     public void LoseGame()
     {
-        Debug.Log("LOST LOST LOST");
-        Application.Quit();
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#endif
+        GameObject.Find("LevelLoader").GetComponent<LevelLoader>().LoadSceneByName("Lost");
     }
 }

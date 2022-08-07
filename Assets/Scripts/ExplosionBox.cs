@@ -62,6 +62,6 @@ public class ExplosionBox : MonoBehaviour
     {
         Destroy(gameObject);
         GameController controller = GameObject.Find("GameController").GetComponent<GameController>();
-        controller.LoseGame();
+        controller.Heart--;
     }
 }
