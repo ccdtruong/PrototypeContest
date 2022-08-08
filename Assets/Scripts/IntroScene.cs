@@ -85,19 +85,30 @@ public class IntroScene : MonoBehaviour
         yield return new WaitForSeconds(1.0f);
 
         //Things burn
+        StartCoroutine(ThingBurns());
         m_grumpy.SetAngry(false);
         m_rebellious.SetAngry(false);
-        m_rebellious.FlipIntro();
-        //m_grumpy.FlipIntro();
+        //m_rebellious.FlipIntro();
+        GrumpySpeech.SetActive(true);
+        GrumpySpeech.GetComponent<SpeechBubble>().ExclamationPhase();
+        GirlSpeech.GetComponent<SpeechBubble>().ExclamationPhase();
+        
+        
+        yield return new WaitForSeconds(1f);
+        GrumpySpeech.SetActive(false);
         GirlSpeech.SetActive(false);
+        m_rebellious.FlipIntro();
+
+        //They run
+        StartCoroutine(m_grumpy.MoveHere(Exit));
+        StartCoroutine(m_rebellious.MoveHere(Exit));
+    }
+
+    IEnumerator ThingBurns(){
         for (int i = 0; i < 3; i++)
         {
             Fires[i].SetActive(true);
             yield return new WaitForSeconds(0.3f);
         }
-
-        //They run
-        StartCoroutine(m_grumpy.MoveHere(Exit));
-        StartCoroutine(m_rebellious.MoveHere(Exit));
     }
 }

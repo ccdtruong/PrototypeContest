@@ -259,13 +259,40 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void MoveIntro(float dir)
+    {
+        if (dir == 0 || m_isSparking)
+        {
+            m_animator.SetBool("isWalkingIntro", false);
+            return;
+        }
+        else if ((dir < 0 && m_facingRight)
+                || (dir > 0 && !m_facingRight))
+        {
+            Flip();
+        }
+        if (m_isGrounded)
+        {
+            m_animator.SetBool("isWalkingIntro", true);
+        }
+        float speed = m_speed;
+        if (!m_isGrounded)
+        {
+            speed = m_jumpSpeed;
+        }
+        float xVal = dir * speed * Time.fixedDeltaTime;
+        Vector2 targetVelocity = new Vector2(xVal, m_rigidbody2D.velocity.y);
+        m_rigidbody2D.velocity = targetVelocity;
+    }
+
     public IEnumerator MoveHere(Transform destination) {
         
         while (transform.position.x < destination.position.x)
         {
-            Move(0.5f);
+            MoveIntro(0.5f);
             yield return new WaitForSeconds(.01f);
         }
+        m_animator.SetBool("isWalkingIntro", false);
     }
 
     public void SetAngry(bool b){
@@ -276,5 +303,11 @@ public class Player : MonoBehaviour
         Vector3 localScale = transform.localScale;
         localScale.x *= -1;
         transform.localScale = localScale;
+    }
+
+    public void Startled(){
+        float y = transform.position.y + 0.1f;
+        float x = transform.position.x;
+        transform.position = new Vector2(x, y);
     }
 }
