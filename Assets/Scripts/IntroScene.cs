@@ -17,6 +17,9 @@ public class IntroScene : MonoBehaviour
     private Transform Exit;
 
     [SerializeField]
+    private Transform KeyLocation;
+
+    [SerializeField]
     private GameObject GrumpySpeech;
 
     [SerializeField]
@@ -88,19 +91,20 @@ public class IntroScene : MonoBehaviour
         StartCoroutine(ThingBurns());
         m_grumpy.SetAngry(false);
         m_rebellious.SetAngry(false);
-        //m_rebellious.FlipIntro();
         GrumpySpeech.SetActive(true);
         GrumpySpeech.GetComponent<SpeechBubble>().ExclamationPhase();
         GirlSpeech.GetComponent<SpeechBubble>().ExclamationPhase();
-        
-        
         yield return new WaitForSeconds(1f);
+
+        //Open Gate
         GrumpySpeech.SetActive(false);
         GirlSpeech.SetActive(false);
         m_rebellious.FlipIntro();
+        StartCoroutine(m_rebellious.MoveHere(KeyLocation));
+        yield return new WaitForSeconds(1f);
 
-        //They run
         StartCoroutine(m_grumpy.MoveHere(Exit));
+        yield return new WaitForSeconds(1f);
         StartCoroutine(m_rebellious.MoveHere(Exit));
     }
 

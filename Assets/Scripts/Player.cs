@@ -304,10 +304,4 @@ public class Player : MonoBehaviour
         localScale.x *= -1;
         transform.localScale = localScale;
     }
-
-    public void Startled(){
-        float y = transform.position.y + 0.1f;
-        float x = transform.position.x;
-        transform.position = new Vector2(x, y);
-    }
 }
