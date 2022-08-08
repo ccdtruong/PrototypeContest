@@ -34,8 +34,8 @@ public class IntroScene : MonoBehaviour
         Fires[0].SetActive(false);
         Fires[1].SetActive(false);
         Fires[2].SetActive(false);
+        m_rebellious.FlipIntro();
         StartCoroutine(StartScene());
-        //StartCoroutine(m_rebellious.SmallJump());
     }
 
     // Update is called once per frame
@@ -69,6 +69,7 @@ public class IntroScene : MonoBehaviour
         yield return new WaitForSeconds(1.0f);
 
         //Grumpy angry
+        m_grumpy.SetAngry(true);
         StartCoroutine(m_grumpy.SmallJump());
         GirlSpeech.SetActive(false);
         GrumpySpeech.SetActive(true);
@@ -76,6 +77,7 @@ public class IntroScene : MonoBehaviour
         yield return new WaitForSeconds(1.0f);
 
         //Girl angry
+        m_rebellious.SetAngry(true);
         StartCoroutine(m_rebellious.SmallJump());
         GrumpySpeech.SetActive(false);
         GirlSpeech.SetActive(true);
@@ -83,6 +85,10 @@ public class IntroScene : MonoBehaviour
         yield return new WaitForSeconds(1.0f);
 
         //Things burn
+        m_grumpy.SetAngry(false);
+        m_rebellious.SetAngry(false);
+        m_rebellious.FlipIntro();
+        m_grumpy.FlipIntro();
         GirlSpeech.SetActive(false);
         for (int i = 0; i < 3; i++)
         {
@@ -90,6 +96,7 @@ public class IntroScene : MonoBehaviour
             yield return new WaitForSeconds(0.3f);
         }
 
+        //They run
         StartCoroutine(m_grumpy.MoveHere(Exit));
         StartCoroutine(m_rebellious.MoveHere(Exit));
     }

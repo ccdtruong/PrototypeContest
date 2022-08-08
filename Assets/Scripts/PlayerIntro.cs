@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
-public class Player : MonoBehaviour
+public class PlayerIntro : MonoBehaviour
 {
     [SerializeField]
     private float m_speed;
@@ -268,19 +268,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void StartledJump(){
-        float y = transform.position.y + 0.1f;
-        float x = transform.position.x;
-        transform.position = new Vector2(x, y);
-    }
-
-    public void SetAngry(bool b){
-        m_animator.SetBool("isFocus", b);
-    }
-
-    public void FlipIntro(){
-        Vector3 localScale = transform.localScale;
-        localScale.x *= -1;
-        transform.localScale = localScale;
+    public IEnumerator StartledJump(){
+        yield return new WaitForSeconds(.01f);
     }
 }
