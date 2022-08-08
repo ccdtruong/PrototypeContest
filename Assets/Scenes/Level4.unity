@@ -7663,6 +7663,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1138714839404496452, guid: 6769eeba36f9c8d4584801184af929f9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 486424338}
+    - target: {fileID: 1138714839404496452, guid: 6769eeba36f9c8d4584801184af929f9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Reload
+      objectReference: {fileID: 0}
     - target: {fileID: 6676435209315411290, guid: 6769eeba36f9c8d4584801184af929f9, type: 3}
       propertyPath: m_Name
       value: UI
