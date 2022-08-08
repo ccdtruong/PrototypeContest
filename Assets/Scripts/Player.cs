@@ -268,12 +268,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void StartledJump(){
-        float y = transform.position.y + 0.1f;
-        float x = transform.position.x;
-        transform.position = new Vector2(x, y);
-    }
-
     public void SetAngry(bool b){
         m_animator.SetBool("isFocus", b);
     }

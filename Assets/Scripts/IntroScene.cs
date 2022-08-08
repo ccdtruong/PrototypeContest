@@ -88,7 +88,7 @@ public class IntroScene : MonoBehaviour
         m_grumpy.SetAngry(false);
         m_rebellious.SetAngry(false);
         m_rebellious.FlipIntro();
-        m_grumpy.FlipIntro();
+        //m_grumpy.FlipIntro();
         GirlSpeech.SetActive(false);
         for (int i = 0; i < 3; i++)
         {
