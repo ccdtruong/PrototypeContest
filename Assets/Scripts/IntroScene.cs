@@ -55,7 +55,7 @@ public class IntroScene : MonoBehaviour
 
         //Grumpy moves toward girl
         StartCoroutine(m_grumpy.MoveHere(GrumpyMovesHere));
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(4f);
 
         //Grumpy talks
         StartCoroutine(m_grumpy.SmallJump());
