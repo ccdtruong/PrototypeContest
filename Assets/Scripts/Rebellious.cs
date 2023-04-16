@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class Rebellious : Player 
 {
+    public new void Start()
+    {
+        m_char = GameSettings.Character.Rebellious;
+        base.Start();
+    }
+
     //private Rigidbody2D m_rgb;
     //private Vector3 m_lastVelocity;
 

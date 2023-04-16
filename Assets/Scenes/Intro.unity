@@ -2946,7 +2946,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 1972545791}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fed91c9a9efc71b4db7ea27c08d12e16, type: 3}
   m_Name: 
@@ -7846,7 +7846,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_grumpy: {fileID: 427681785}
-  m_rebellious: {fileID: 893584918}
+  m_rebellious: {fileID: 1972545793}
   GrumpyMovesHere: {fileID: 2111430218}
   Exit: {fileID: 188946415}
   KeyLocation: {fileID: 1666352654}
@@ -8215,6 +8215,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rebellious
       objectReference: {fileID: 0}
+    - target: {fileID: 8615125231679452651, guid: 050452e975b8c7e4ba499629473d05a4, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 050452e975b8c7e4ba499629473d05a4, type: 3}
 --- !u!4 &1972545792 stripped
@@ -8222,6 +8226,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2138542868894849762, guid: 050452e975b8c7e4ba499629473d05a4, type: 3}
   m_PrefabInstance: {fileID: 1972545791}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1972545793 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6480590589212309308, guid: 050452e975b8c7e4ba499629473d05a4, type: 3}
+  m_PrefabInstance: {fileID: 1972545791}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b4056272355ec24e9e081ca1c84a6d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1972688385
 PrefabInstance:
   m_ObjectHideFlags: 0

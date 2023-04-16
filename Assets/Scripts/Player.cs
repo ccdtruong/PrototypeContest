@@ -1,8 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityStandardAssets.CrossPlatformInput;
+using System;
 
+[Serializable]
 public class Player : MonoBehaviour
 {
     [SerializeField]
@@ -28,7 +31,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     ParticleSystem m_sparksParticles;
 
-    private float horizontal;
+    public float horizontal;
     private bool m_IsSelected;
     private bool m_isJumping;
     private bool m_isGrounded;
@@ -43,8 +46,10 @@ public class Player : MonoBehaviour
     private float objectHeight;
     private float delta = 0.2f;
 
-
+    protected GameSettings.Character m_char;
     private bool m_facingRight = true;
+    private Client m_client;
+    private Vector2 m_position;
 
     private void Awake()
     {
@@ -53,40 +58,68 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     public void Start()
     {
+        if (GameSettings.m_mode == GameSettings.GameMode.Duo && SceneManager.GetActiveScene().name != "Intro")
+        {
+            m_client = ConnectionController.GetClient();
+            if (GameSettings.m_chosenChar == m_char)
+            {
+                m_IsSelected = true;
+            } else
+            {
+                m_client.m_OnMove += OnMove;
+                m_client.m_OnJump += OnJump;
+            }
+            m_client.m_OnUpdatePlayerState += OnUpdatePlayerState;
+            Debug.Log(GameSettings.m_chosenChar + " " + m_char);
+        }
         m_animator = gameObject.GetComponent<Animator>();
         m_rigidbody2D = gameObject.GetComponent<Rigidbody2D>();
         m_isJumping = false;
         m_isGrounded = true;
-
+        m_position = transform.position;
         objectWidth = transform.GetComponent<SpriteRenderer>().bounds.size.x / 2;
         objectHeight = transform.GetComponent<SpriteRenderer>().bounds.size.y / 2;
     }
 
+    public void OnDestroy()
+    {
+        if (GameSettings.m_mode == GameSettings.GameMode.Duo && m_client != null)
+        {
+            m_client.m_OnJump -= OnJump;
+            m_client.m_OnMove -= OnMove;
+            m_client.m_OnUpdatePlayerState -= OnUpdatePlayerState;
+        }
+    }
+
     public void Update()
     {
+        //if (GameSettings.m_mode == GameSettings.GameMode.Duo && m_client is Host)
+        //{
+        //    if (m_position != (Vector2)transform.position)
+        //        m_client.UpdatePlayerState(m_char, transform.position, m_facingRight);
+        //    m_position = transform.position;
+        //}
         if (!m_IsSelected) return;
-        //horizontal = Input.GetAxis("Horizontal");
         horizontal = CrossPlatformInputManager.GetAxis("Horizontal");
-        //Debug.Log("hor = " + horizontal);
         if (CrossPlatformInputManager.GetButtonDown("Jump"))
         {
             Jump();
         }
 
-        //Debug.Log("isJumping = " + m_isJumping);
         m_lastVelocity = m_rigidbody2D.velocity;
-        //if(HoldTheButtonCheck())
-        //{
-        //    Debug.Log("Holding button");
-        //    PlatformScript pls = GameObject.Find("Platform").GetComponent<PlatformScript>();
-        //    pls.Trigger();
-        //}
+
+        if (GameSettings.m_mode == GameSettings.GameMode.Duo)
+        {
+            if (m_position != (Vector2)transform.position)
+                m_client.UpdatePlayerState(m_char, transform.position, m_facingRight);
+            m_position = transform.position;
+        }
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (!m_IsSelected) return;
+        //if (!m_IsSelected) return;
         GroundCheck();
         Debug.Log("isGround = " + m_isGrounded);
         if (m_isGrounded)
@@ -100,6 +133,12 @@ public class Player : MonoBehaviour
             if (m_isJumping) m_animator.SetBool("isJumping", true);
         }
         Move(horizontal);
+
+        if (GameSettings.m_mode == GameSettings.GameMode.Duo)
+        {
+            if (m_IsSelected)
+                m_client.Move(horizontal);
+        }
     }
 
     public void SetSelected(bool isSelected)
@@ -119,6 +158,8 @@ public class Player : MonoBehaviour
             m_animator.SetBool("isJumping", true);
             m_rigidbody2D.velocity = Vector2.up * m_jumpForce;
             m_isJumping = true;
+            if (m_IsSelected && GameSettings.m_mode == GameSettings.GameMode.Duo)
+                m_client.Jump();
         }
     }
 
@@ -303,5 +344,28 @@ public class Player : MonoBehaviour
         Vector3 localScale = transform.localScale;
         localScale.x *= -1;
         transform.localScale = localScale;
+    }
+
+    void OnMove(float hor)
+    {
+        horizontal = hor;
+    }
+
+    void OnJump()
+    {
+        if (m_animator != null)
+            Jump();
+    }
+
+    void OnUpdatePlayerState(Message<UpdatePlayerState> message)
+    {
+        if (gameObject != null && m_char == message.message.character)
+        {
+            transform.position = message.message.position;
+            if (m_facingRight != message.message.facingRight)
+            {
+                Flip();
+            }
+        }
     }
 }

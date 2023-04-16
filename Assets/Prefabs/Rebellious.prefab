@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2138542868894849761}
   - component: {fileID: 2138542868894849760}
   - component: {fileID: 2138542868894849763}
-  - component: {fileID: 2138542868894849757}
+  - component: {fileID: 6480590589212309308}
   m_Layer: 7
   m_Name: Rebellious
   m_TagString: Player
@@ -148,7 +148,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &2138542868894849757
+--- !u!114 &6480590589212309308
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -157,7 +157,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2138542869844660345}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fed91c9a9efc71b4db7ea27c08d12e16, type: 3}
+  m_Script: {fileID: 11500000, guid: 8b4056272355ec24e9e081ca1c84a6d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_speed: 300
@@ -171,6 +171,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   m_sparksParticles: {fileID: 2264568496602250923}
+  horizontal: 0
 --- !u!1 &2138542870242078424
 GameObject:
   m_ObjectHideFlags: 0

@@ -55,7 +55,8 @@ public class GameController : MonoBehaviour
     {
         m_cameraZoom = GameObject.Find("CameraZoom").GetComponent<CameraZoom>();
         m_isGateOpened = false;
-        m_grumpy.SetSelected(true);
+        if (GameSettings.m_mode == GameSettings.GameMode.Single)
+            m_grumpy.SetSelected(true);
         m_playerPassed = 0;
         Coin = 0;
         Heart = 1;
@@ -65,6 +66,7 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameSettings.m_mode == GameSettings.GameMode.Duo) ConnectionController.Update();
         if (CrossPlatformInputManager.GetButtonDown("Switch"))
         {
             SwitchCharacter();
@@ -99,6 +101,8 @@ public class GameController : MonoBehaviour
 
     private void SwitchCharacter()
     {
+        if (GameSettings.m_mode == GameSettings.GameMode.Duo)
+            return;
         if (m_grumpy.IsSelected())
         {
             m_rebellious.SetSelected(true);

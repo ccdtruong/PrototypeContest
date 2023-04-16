@@ -405,7 +405,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1945274556}
         m_TargetAssemblyTypeName: LevelLoader, Assembly-CSharp
-        m_MethodName: LoadMainMenu
+        m_MethodName: LoadMainMenuAndSendMessage
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -719,7 +719,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1945274556}
         m_TargetAssemblyTypeName: LevelLoader, Assembly-CSharp
-        m_MethodName: LoadLastScene
+        m_MethodName: LoadLastSceneAndSendMessage
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
